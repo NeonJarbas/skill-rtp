@@ -1,12 +1,11 @@
-from ovos_plugin_common_play.ocp import MediaType, PlaybackType
-from ovos_workshop.skills.common_play import OVOSCommonPlaybackSkill, \
-    ocp_search, ocp_featured_media
+from ovos_utils.ocp import MediaType, PlaybackType
+from ovos_workshop.decorators.ocp import ocp_search, ocp_featured_media
+from ovos_workshop.skills.common_play import OVOSCommonPlaybackSkill
 
 
 class RTPSkill(OVOSCommonPlaybackSkill):
-    def __init__(self):
-        super().__init__("RTP")
-        self.supported_media = [MediaType.TV, MediaType.GENERIC]
+    def __init__(self, *args, **kwargs):
+        self.supported_media = [MediaType.TV]
         self.skill_icon = self.default_bg = "https://cdn-images.rtp.pt/common/img/channels/logos/gray-negative/horizontal/rtp.png"
         self.channels = {
             "rtp1": {"name": "RTP1", "img": "5-563718101410.png"},
@@ -18,6 +17,7 @@ class RTPSkill(OVOSCommonPlaybackSkill):
             "rtpacores": {"name": "RTP Açores", "img": "106-563419141305.png"},
             "rtpafrica": {"name": "RTP Africa", "img": "27-363219141305.png"}
         }
+        super().__init__(*args, **kwargs)
 
     @property
     def javascript(self):
@@ -72,7 +72,3 @@ class RTPSkill(OVOSCommonPlaybackSkill):
                 "title": "RTP (TV Channel Playlist)",
                 "author": "RTP"
             }
-
-
-def create_skill():
-    return RTPSkill()
